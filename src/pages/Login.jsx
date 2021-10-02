@@ -5,11 +5,12 @@ import {
   Container, Row, Col, Card, Form, FloatingLabel, Button,
 } from 'react-bootstrap';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 
 const Login = () => {
   const validationSchema = yup.object().shape({
-    username: yup.string().trim().required('Обязательное поле'),
-    password: yup.string().trim().required('Обязательное поле'),
+    username: yup.string().trim().required(),
+    password: yup.string().trim().required(),
   });
 
   const formik = useFormik({
@@ -28,6 +29,8 @@ const Login = () => {
     usernameRef.current.focus();
   }, []);
 
+  const { t } = useTranslation();
+
   return (
     <Container fluid className="h-100">
       <div className="d-flex flex-column justify-content-center h-100">
@@ -41,7 +44,7 @@ const Login = () => {
             <Card border="secondary">
               <Card.Body>
                 <Form onSubmit={formik.handleSubmit} className="px-5 py-3">
-                  <h2 className="mb-4 fw-light text-center">Вход</h2>
+                  <h2 className="mb-4 fw-light text-center">{t('elements.loginTitle')}</h2>
                   <FloatingLabel controlId="username" label="Ваш ник" className="mb-3">
                     <Form.Control
                       type="text"
@@ -55,7 +58,7 @@ const Login = () => {
                       ref={usernameRef}
                     />
                     <Form.Control.Feedback type="invalid" tooltip className="end-0">
-                      {formik.errors.username}
+                      {t(formik.errors.username)}
                     </Form.Control.Feedback>
                   </FloatingLabel>
                   <FloatingLabel controlId="password" label="Пароль" className="mb-4">
@@ -70,18 +73,18 @@ const Login = () => {
                       isInvalid={formik.touched.password && !!formik.errors.password}
                     />
                     <Form.Control.Feedback type="invalid" tooltip className="end-0">
-                      {formik.errors.password}
+                      {t(formik.errors.password)}
                     </Form.Control.Feedback>
                   </FloatingLabel>
                   <Button type="submit" variant="outline-info" size="lg" className="w-100">
-                    Войти
+                    {t('elements.loginButton')}
                   </Button>
                 </Form>
               </Card.Body>
               <Card.Footer className="p-4">
                 <div className="text-center">
-                  <span className="pe-2">Нет аккаунта?</span>
-                  <Link to="/signup">Регистрация</Link>
+                  <span className="pe-2">{t('elements.haveNoAccount?')}</span>
+                  <Link to="/signup">{t('elements.registrationLink')}</Link>
                 </div>
               </Card.Footer>
             </Card>
