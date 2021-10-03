@@ -11,7 +11,7 @@ const init = () => {
     .use(initReactI18next)
     .init({
       lng: 'ru',
-      debug: true,
+      debug: false,
       resources,
     });
 

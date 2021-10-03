@@ -10,6 +10,8 @@ export default {
       loginButton: 'Войти',
       'haveNoAccount?': 'Нет аккаунта?',
       registrationLink: 'Регистрация',
+      pageNotFound: 'Страница не найдена (:',
+      backToMain: 'Назад на главную',
     },
   },
 };
