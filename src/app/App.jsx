@@ -5,24 +5,29 @@ import {
   Route,
 } from 'react-router-dom';
 
+import AuthProvider from '../components/AuthProvider.jsx';
+import AuthenticatedRoute from '../components/AuthenticatedRoute.jsx';
+
 import Root from '../pages/Root.jsx';
 import Login from '../pages/Login.jsx';
 import NotFound from '../pages/NotFound.jsx';
 
 const App = () => (
-  <Router>
-    <Switch>
-      <Route exact path="/">
-        <Root />
-      </Route>
-      <Route path="/login">
-        <Login />
-      </Route>
-      <Route path="*">
-        <NotFound />
-      </Route>
-    </Switch>
-  </Router>
+  <AuthProvider>
+    <Router>
+      <Switch>
+        <AuthenticatedRoute exact path="/">
+          <Root />
+        </AuthenticatedRoute>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="*">
+          <NotFound />
+        </Route>
+      </Switch>
+    </Router>
+  </AuthProvider>
 );
 
 export default App;
