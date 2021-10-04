@@ -12,6 +12,7 @@ export default {
       registrationLink: 'Регистрация',
       pageNotFound: 'Страница не найдена (:',
       backToMain: 'Назад на главную',
+      authFailed: 'Неверные имя пользователя или пароль',
     },
   },
 };

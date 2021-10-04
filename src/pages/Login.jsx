@@ -1,17 +1,23 @@
-import React, { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import {
-  Container, Row, Col, Card, Form, FloatingLabel, Button,
+  Container, Row, Col, Card, Form, FloatingLabel, Button, ToastContainer, Toast,
 } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
+
+import useAuth from '../hooks/useAuth.js';
+import routes from '../routes.js';
 
 const Login = () => {
-  const validationSchema = yup.object().shape({
-    username: yup.string().trim().required(),
-    password: yup.string().trim().required(),
-  });
+  const [authFailed, setAuthFailed] = useState(false);
+  const usernameRef = useRef();
+  const location = useLocation();
+  const history = useHistory();
+  const { t } = useTranslation();
+  const auth = useAuth();
 
   const formik = useFormik({
     initialValues: {
@@ -19,17 +25,31 @@ const Login = () => {
       password: '',
     },
     onSubmit: async ({ username, password }) => {
-      console.dir({ username, password });
+      setAuthFailed(false);
+      try {
+        const { data } = await axios.post(routes.loginPath(), { username, password });
+        const { from } = location.state || { from: { pathname: '/' } };
+
+        auth.logIn(data);
+        history.replace(from);
+      } catch (err) {
+        if (!err.isAxiosError || err.response.status !== 401) throw err;
+
+        setAuthFailed(true);
+        usernameRef.current.select();
+      }
     },
-    validationSchema,
+    validationSchema: yup.object().shape({
+      username: yup.string().trim().required(),
+      password: yup.string().trim().required(),
+    }),
   });
 
-  const usernameRef = useRef();
+  const closeToast = () => setAuthFailed(false);
+
   useEffect(() => {
     usernameRef.current.focus();
   }, []);
-
-  const { t } = useTranslation();
 
   return (
     <Container fluid className="h-100">
@@ -90,6 +110,14 @@ const Login = () => {
             </Card>
           </Col>
         </Row>
+        <ToastContainer className="mt-5 p-3" position="top-center">
+          <Toast show={authFailed} bg="danger" onClose={closeToast}>
+            <Toast.Header>
+              <strong className="me-auto">Hexlet Chat</strong>
+            </Toast.Header>
+            <Toast.Body>{t('elements.authFailed')}</Toast.Body>
+          </Toast>
+        </ToastContainer>
       </div>
     </Container>
   );

@@ -21,6 +21,7 @@
   "license": "ISC",
   "homepage": "https://github.com/ushachev/frontend-project-lvl4#readme",
   "dependencies": {
+    "axios": "^0.22.0",
     "bootstrap": "^5.1.1",
     "bootswatch": "^5.1.1",
     "core-js": "^3.17.3",
