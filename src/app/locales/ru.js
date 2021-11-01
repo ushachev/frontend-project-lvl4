@@ -13,6 +13,12 @@ export default {
       pageNotFound: 'Страница не найдена (:',
       backToMain: 'Назад на главную',
       authFailed: 'Неверные имя пользователя или пароль',
+      channels: 'Каналы',
+    },
+    tooltips: {
+      logout: 'Выйти',
+      addChannel: 'Добавить канал',
+      moreActions: 'Другие действия',
     },
   },
 };
