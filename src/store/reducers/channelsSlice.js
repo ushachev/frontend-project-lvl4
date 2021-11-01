@@ -16,4 +16,9 @@ const slice = createSlice({
 
 export const selectChannelList = (state) => state.channels;
 
+export const selectCurrentChannel = (state) => {
+  const [channel = {}] = state.channels.filter(({ id }) => id === state.currentChannelId);
+  return channel;
+};
+
 export default slice.reducer;
