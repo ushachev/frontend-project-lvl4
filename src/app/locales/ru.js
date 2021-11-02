@@ -20,5 +20,8 @@ export default {
       addChannel: 'Добавить канал',
       moreActions: 'Другие действия',
     },
+    placeholders: {
+      enterMessage: 'Введите сообщение...',
+    },
   },
 };

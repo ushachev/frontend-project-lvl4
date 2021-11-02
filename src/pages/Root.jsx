@@ -8,6 +8,7 @@ import SidebarHeader from '../components/SidebarHeader.jsx';
 import ChannelList from '../components/ChannelList.jsx';
 import ChannelHeader from '../components/ChannelHeader.jsx';
 import MessageBox from '../components/MessageBox.jsx';
+import MessageInput from '../components/MessageInput.jsx';
 
 const Root = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,9 @@ const Root = () => {
         <Col xs={9} className="d-flex flex-column p-0 text-body text-opacity-75">
           <ChannelHeader />
           <MessageBox />
+          <div className="px-5 pb-4 bg-dark">
+            <MessageInput />
+          </div>
         </Col>
       </Row>
     </Container>

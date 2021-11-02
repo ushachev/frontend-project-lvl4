@@ -27,7 +27,7 @@ const ChannelList = () => {
           <IoIosAddCircleOutline size="1.75em" />
         </Button>
       </div>
-      <ul className="list-unstyled">
+      <ul className="mt-1 list-unstyled">
         {channels.map((channel) => {
           const { id } = channel;
           return (
