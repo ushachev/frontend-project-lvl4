@@ -20,10 +20,8 @@ const Login = () => {
   const auth = useAuth();
 
   const formik = useFormik({
-    initialValues: {
-      username: '',
-      password: '',
-    },
+    initialValues: { username: '', password: '' },
+    initialErrors: { username: null },
     onSubmit: async ({ username, password }) => {
       setAuthFailed(false);
       try {
@@ -65,7 +63,11 @@ const Login = () => {
               <Card.Body>
                 <Form onSubmit={formik.handleSubmit} className="px-5 py-3">
                   <h2 className="mb-4 fw-light text-center">{t('elements.loginTitle')}</h2>
-                  <FloatingLabel controlId="username" label="Ваш ник" className="mb-3">
+                  <FloatingLabel
+                    controlId="username"
+                    label={t('placeholders.nickname')}
+                    className="mb-3"
+                  >
                     <Form.Control
                       type="text"
                       placeholder="username"
@@ -81,7 +83,11 @@ const Login = () => {
                       {t(formik.errors.username)}
                     </Form.Control.Feedback>
                   </FloatingLabel>
-                  <FloatingLabel controlId="password" label="Пароль" className="mb-4">
+                  <FloatingLabel
+                    controlId="password"
+                    label={t('placeholders.password')}
+                    className="mb-4"
+                  >
                     <Form.Control
                       type="password"
                       placeholder="password"
@@ -96,7 +102,13 @@ const Login = () => {
                       {t(formik.errors.password)}
                     </Form.Control.Feedback>
                   </FloatingLabel>
-                  <Button type="submit" variant="outline-info" size="lg" className="w-100">
+                  <Button
+                    type="submit"
+                    variant="outline-info"
+                    size="lg"
+                    className="w-100"
+                    disabled={!formik.isValid || formik.isSubmitting}
+                  >
                     {t('elements.loginButton')}
                   </Button>
                 </Form>

@@ -22,6 +22,8 @@ export default {
     },
     placeholders: {
       enterMessage: 'Введите сообщение...',
+      nickname: 'Ваш ник',
+      password: 'Пароль',
     },
   },
 };
