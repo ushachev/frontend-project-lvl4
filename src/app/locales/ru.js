@@ -14,6 +14,7 @@ export default {
       backToMain: 'Назад на главную',
       authFailed: 'Неверные имя пользователя или пароль',
       channels: 'Каналы',
+      chatConnects: 'Устанавливается соединение, отправка сообщений пока недоступна',
     },
     tooltips: {
       logout: 'Выйти',

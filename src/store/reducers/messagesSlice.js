@@ -6,6 +6,9 @@ const slice = createSlice({
   name: 'messages',
   initialState: [],
   reducers: {
+    addMessage(state, { payload }) {
+      state.push(payload);
+    },
   },
   extraReducers: {
     [fetchChatData.fulfilled](_state, { payload }) {
@@ -14,6 +17,9 @@ const slice = createSlice({
   },
 });
 
-export const selectMessageList = (state) => state.messages;
+export const { addMessage } = slice.actions;
+
+export const selectCurrentMessageList = (state) => state.messages
+  .filter(({ channelId }) => channelId === state.currentChannelId);
 
 export default slice.reducer;

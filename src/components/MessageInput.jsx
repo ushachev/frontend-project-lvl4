@@ -1,25 +1,33 @@
 import React, { useEffect, useRef } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { IoIosAdd } from 'react-icons/io';
+import { BsWifiOff } from 'react-icons/bs';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 
-const MessageInput = () => {
+const MessageInput = ({
+  connected, sendMessage, username, currentChannelId,
+}) => {
   const messageRef = useRef();
   const { t } = useTranslation();
 
   const formik = useFormik({
-    initialValues: { message: '' },
-    initialErrors: { message: null },
-    onSubmit: async ({ message }, { resetForm, setSubmitting }) => {
-      console.log('message:', message);
-      resetForm();
-      messageRef.current.focus();
+    initialValues: { body: '' },
+    initialErrors: { body: null },
+    onSubmit: async ({ body }, { resetForm, setSubmitting }) => {
+      try {
+        await sendMessage({ channelId: currentChannelId, username, body });
+        resetForm();
+        messageRef.current.focus();
+      } catch (err) {
+        console.log(err);
+        messageRef.current.select();
+      }
       setSubmitting(false);
     },
     validationSchema: yup.object().shape({
-      message: yup.string().trim().required(),
+      body: yup.string().trim().required(),
     }),
   });
 
@@ -28,25 +36,38 @@ const MessageInput = () => {
   }, []);
 
   return (
-    <Form onSubmit={formik.handleSubmit} className="position-relative ps-3">
-      <Form.Control
-        type="text"
-        placeholder={t('placeholders.enterMessage')}
-        name="message"
-        onChange={formik.handleChange}
-        value={formik.values.message}
-        ref={messageRef}
-        className="ps-5 py-2 border-0 rounded-pill fs-6 text-reset bg-secondary bg-opacity-50"
-      />
-      <Button
-        type="submit"
-        variant="contained"
-        size="sm"
-        className="position-absolute top-50 p-2 border border-3 border-dark rounded-circle text-reset bg-secondary translate-middle"
-        disabled={!formik.isValid || formik.isSubmitting}
-      >
-        <IoIosAdd size="2em" />
-      </Button>
+    <Form onSubmit={formik.handleSubmit} className="ps-3">
+      <div className="position-relative">
+        <Form.Control
+          type="text"
+          placeholder={t('placeholders.enterMessage')}
+          name="body"
+          autoComplete="off"
+          readOnly={formik.isSubmitting}
+          onChange={formik.handleChange}
+          value={formik.values.body}
+          ref={messageRef}
+          aria-describedby="messageHelpBlock"
+          className="ps-5 py-2 border-0 rounded-pill fs-6 text-reset bg-secondary bg-opacity-50"
+        />
+        <Button
+          type="submit"
+          variant="contained"
+          size="sm"
+          className="position-absolute top-50 p-2 border border-3 border-dark rounded-circle text-reset bg-secondary translate-middle"
+          disabled={!connected || !formik.isValid || formik.isSubmitting}
+        >
+          <IoIosAdd size="2em" />
+        </Button>
+      </div>
+      <Form.Text id="messageHelpBlock" muted className="ps-4">
+        {!connected && (
+          <>
+            <BsWifiOff size="1.4em" className="me-2" />
+            {t('elements.chatConnects')}
+          </>
+        )}
+      </Form.Text>
     </Form>
   );
 };

@@ -5,12 +5,10 @@ import { IoIosAddCircleOutline } from 'react-icons/io';
 import { useTranslation } from 'react-i18next';
 
 import { selectChannelList } from '../store/reducers/channelsSlice.js';
-import { selectCurrentChannelId } from '../store/reducers/currentChannelSlice.js';
 
 import Channel from './Channel.jsx';
 
-const ChannelList = () => {
-  const currentChannelId = useSelector(selectCurrentChannelId);
+const ChannelList = ({ currentChannelId }) => {
   const channels = useSelector(selectChannelList);
   const { t } = useTranslation();
 

@@ -19,6 +19,7 @@ const buildState = (defaultState) => {
     currentChannelId: generalChannelId,
     users: [
       { id: 1, username: 'admin', password: 'admin' },
+      { id: 2, username: 'user', password: 'user' },
     ],
   };
 
@@ -43,6 +44,10 @@ export default (app, defaultState = {}) => {
 
   app.io.on('connect', (socket) => {
     console.log({ 'socket.id': socket.id });
+
+    socket.on('disconnect', (reason) => {
+      console.log('Server: socket disconnected with reason:', reason);
+    });
 
     socket.on('newMessage', (message, acknowledge = _.noop) => {
       const messageWithId = {
