@@ -1,0 +1,4 @@
+.message:hover {
+  --bs-bg-opacity: 0.5;
+  background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity));
+}
