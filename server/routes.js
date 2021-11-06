@@ -3,6 +3,8 @@
 import _ from 'lodash';
 import HttpErrors from 'http-errors';
 
+import messageData from './chatData.js';
+
 const { Unauthorized, Conflict } = HttpErrors;
 
 const getNextId = () => Number(_.uniqueId());
@@ -15,7 +17,12 @@ const buildState = (defaultState) => {
       { id: generalChannelId, name: 'general', removable: false },
       { id: randomChannelId, name: 'random', removable: false },
     ],
-    messages: [],
+    messages: messageData.map(({ username, body }) => ({
+      id: getNextId(),
+      channelId: generalChannelId,
+      username,
+      body,
+    })),
     currentChannelId: generalChannelId,
     users: [
       { id: 1, username: 'admin', password: 'admin' },

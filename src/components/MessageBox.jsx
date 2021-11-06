@@ -7,7 +7,7 @@ const MessageBox = () => {
   const messageList = useSelector(selectCurrentMessageList);
 
   return (
-    <div className="flex-grow-1 bg-dark">
+    <div className="flex-grow-1 overflow-auto bg-dark">
       <ul>
         {messageList.map(({ id, username, body }) => (
           <li key={id}>

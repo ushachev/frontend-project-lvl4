@@ -33,7 +33,7 @@ const Root = () => {
           <h1 className="mt-3 mb-4 ps-3 fs-4 text-body text-opacity-75">Hexlet Chat</h1>
           <ChannelList currentChannelId={currentChannelId} />
         </Col>
-        <Col xs={9} className="d-flex flex-column p-0 text-body text-opacity-75">
+        <Col xs={9} className="d-flex flex-column mh-100 overflow-hidden p-0 text-body text-opacity-75">
           <ChannelHeader />
           <MessageBox />
           <div className="px-5 pb-2 bg-dark">
