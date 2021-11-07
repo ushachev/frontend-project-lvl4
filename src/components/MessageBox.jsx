@@ -14,7 +14,7 @@ const MessageBox = () => {
   }, [messageList]);
 
   return (
-    <div className="flex-grow-1 overflow-hidden bg-dark">
+    <div className="mt-auto overflow-hidden">
       <SimpleBar scrollableNodeProps={{ ref: scrollableNodeRef }} className="mh-100">
         <ul className="list-unstyled">
           {messageList.map(({ id, username, body }) => (

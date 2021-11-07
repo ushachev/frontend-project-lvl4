@@ -33,7 +33,7 @@ const MessageInput = ({
 
   useEffect(() => {
     messageRef.current.focus();
-  }, []);
+  }, [currentChannelId]);
 
   return (
     <Form onSubmit={formik.handleSubmit} className="ps-3">

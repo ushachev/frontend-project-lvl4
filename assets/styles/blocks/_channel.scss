@@ -1,0 +1,4 @@
+.channel:hover {
+  --bs-bg-opacity: 0.75;
+  background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity));
+}

@@ -12,7 +12,7 @@ const ChannelHeader = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="d-flex justify-content-between p-3 fs-5 fw-bold bg-dark bg-opacity-50">
+    <div className="d-flex justify-content-between p-3 fs-5 fw-bold bg-body bg-opacity-50">
       <div>
         <RiHashtag size="1.5em" className="pe-1" />
         <span>{name}</span>
