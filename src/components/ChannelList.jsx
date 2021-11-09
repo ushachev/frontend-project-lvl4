@@ -1,16 +1,23 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import { useTranslation } from 'react-i18next';
 
 import { selectChannelList } from '../store/reducers/channelsSlice.js';
 
+import { setModal } from '../store/reducers/modalSlice.js';
+
 import Channel from './Channel.jsx';
 
 const ChannelList = ({ currentChannelId }) => {
+  const dispath = useDispatch();
   const channels = useSelector(selectChannelList);
   const { t } = useTranslation();
+
+  const handleAddChannel = () => {
+    dispath(setModal({ type: 'adding' }));
+  };
 
   return (
     <>
@@ -21,6 +28,7 @@ const ChannelList = ({ currentChannelId }) => {
           size="sm"
           className="text-reset"
           title={t('tooltips.addChannel')}
+          onClick={handleAddChannel}
         >
           <IoIosAddCircleOutline size="1.75em" />
         </Button>

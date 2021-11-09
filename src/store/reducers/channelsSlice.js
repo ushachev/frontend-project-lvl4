@@ -6,6 +6,9 @@ const slice = createSlice({
   name: 'channels',
   initialState: [],
   reducers: {
+    addChannel(state, { payload }) {
+      state.push(payload);
+    },
   },
   extraReducers: {
     [fetchChatData.fulfilled](_state, { payload }) {
@@ -13,6 +16,8 @@ const slice = createSlice({
     },
   },
 });
+
+export const { addChannel } = slice.actions;
 
 export const selectChannelList = (state) => state.channels;
 

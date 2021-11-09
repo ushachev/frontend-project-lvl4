@@ -3,6 +3,13 @@ export default {
     errors: {
       validation: {
         required: 'Обязательное поле',
+        notOneOf: "Название '{{value}}' уже существует",
+        min_one: 'Не меньше {{count}} символа',
+        min_few: 'Не меньше {{count}} символов',
+        min_many: 'Не меньше {{count}} символов',
+        max_one: 'Не больше {{count}} символа',
+        max_few: 'Не больше {{count}} символов',
+        max_many: 'Не больше {{count}} символов',
       },
     },
     elements: {
@@ -15,6 +22,9 @@ export default {
       authFailed: 'Неверные имя пользователя или пароль',
       channels: 'Каналы',
       chatConnects: 'Устанавливается соединение, отправка сообщений пока недоступна',
+      addChannel: 'Добавить канал',
+      cancelButton: 'Отменить',
+      sendButton: 'Отправить',
     },
     tooltips: {
       logout: 'Выйти',

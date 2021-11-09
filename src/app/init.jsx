@@ -19,7 +19,12 @@ const init = () => {
 
   setLocale({
     mixed: {
-      required: 'errors.validation.required',
+      required: { key: 'errors.validation.required' },
+      notOneOf: ({ value }) => ({ key: 'errors.validation.notOneOf', values: { value } }),
+    },
+    string: {
+      min: ({ min }) => ({ key: 'errors.validation.min', values: { count: min } }),
+      max: ({ max }) => ({ key: 'errors.validation.max', values: { count: max } }),
     },
   });
 

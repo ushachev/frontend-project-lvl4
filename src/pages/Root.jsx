@@ -7,17 +7,20 @@ import useChat from '../hooks/useChat.js';
 import fetchChatData from '../store/actions/index.js';
 
 import { selectCurrentChannelId } from '../store/reducers/currentChannelSlice.js';
+import { selectModal } from '../store/reducers/modalSlice.js';
 
 import SidebarHeader from '../components/SidebarHeader.jsx';
 import ChannelList from '../components/ChannelList.jsx';
 import ChannelHeader from '../components/ChannelHeader.jsx';
 import MessageBox from '../components/MessageBox.jsx';
 import MessageInput from '../components/MessageInput.jsx';
+import ChatModal from '../components/ChatModal.jsx';
 
 const Root = () => {
   const currentChannelId = useSelector(selectCurrentChannelId);
+  const modal = useSelector(selectModal);
   const dispatch = useDispatch();
-  const { connected, sendMessage } = useChat();
+  const { connected, sendMessage, sendChannel } = useChat();
 
   useEffect(() => {
     dispatch(fetchChatData());
@@ -46,6 +49,12 @@ const Root = () => {
           </div>
         </Col>
       </Row>
+      {modal.type && (
+        <ChatModal
+          modal={modal}
+          sendChannel={sendChannel}
+        />
+      )}
     </Container>
   );
 };

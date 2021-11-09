@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { io } from 'socket.io-client';
 
 import { addMessage } from '../store/reducers/messagesSlice.js';
+import { addChannel } from '../store/reducers/channelsSlice.js';
 
 const useChat = () => {
   const [connected, setConnected] = useState(false);
@@ -23,22 +24,30 @@ const useChat = () => {
       console.log('Chat: new message added');
       dispatch(addMessage(message));
     });
+    socketRef.current.on('newChannel', (channel) => {
+      console.log('Chat: new channel added');
+      dispatch(addChannel(channel));
+    });
 
     return () => {
       socketRef.current.disconnect();
     };
   }, []);
 
-  const sendMessage = (message) => new Promise((resolve, reject) => {
+  const getPromiseByEvent = (event, payload) => new Promise((resolve, reject) => {
     const timerId = setTimeout(() => reject(new Error('Time out!')), 3000);
 
-    socketRef.current.volatile.emit('newMessage', message, (response) => {
+    socketRef.current.volatile.emit(event, payload, (response) => {
       clearTimeout(timerId);
       resolve(response);
     });
   });
 
-  return { connected, sendMessage };
+  const sendMessage = (message) => getPromiseByEvent('newMessage', message);
+
+  const sendChannel = (channel) => getPromiseByEvent('newChannel', channel);
+
+  return { connected, sendMessage, sendChannel };
 };
 
 export default useChat;

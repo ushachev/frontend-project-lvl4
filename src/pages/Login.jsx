@@ -80,7 +80,7 @@ const Login = () => {
                       ref={usernameRef}
                     />
                     <Form.Control.Feedback type="invalid" tooltip className="end-0">
-                      {t(formik.errors.username)}
+                      {t(formik.errors.username?.key)}
                     </Form.Control.Feedback>
                   </FloatingLabel>
                   <FloatingLabel
