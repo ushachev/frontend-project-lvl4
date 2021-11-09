@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
+import SimpleBar from 'simplebar-react';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import { useTranslation } from 'react-i18next';
 
@@ -33,14 +34,18 @@ const ChannelList = ({ currentChannelId }) => {
           <IoIosAddCircleOutline size="1.75em" />
         </Button>
       </div>
-      <ul className="mt-1 list-unstyled">
-        {channels.map((channel) => {
-          const { id } = channel;
-          return (
-            <Channel key={id} channel={channel} current={id === currentChannelId} />
-          );
-        })}
-      </ul>
+      <div className="pt-1 pb-3 overflow-hidden">
+        <SimpleBar className="mh-100">
+          <ul className="list-unstyled">
+            {channels.map((channel) => {
+              const { id } = channel;
+              return (
+                <Channel key={id} channel={channel} current={id === currentChannelId} />
+              );
+            })}
+          </ul>
+        </SimpleBar>
+      </div>
     </>
   );
 };
