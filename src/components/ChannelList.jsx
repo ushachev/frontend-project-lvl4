@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import SimpleBar from 'simplebar-react';
@@ -6,18 +6,37 @@ import { IoIosAddCircleOutline } from 'react-icons/io';
 import { useTranslation } from 'react-i18next';
 
 import { selectChannelList } from '../store/reducers/channelsSlice.js';
-
+import { selectUi, setChannelListScroll } from '../store/reducers/uiSlice.js';
 import { setModal } from '../store/reducers/modalSlice.js';
 
 import Channel from './Channel.jsx';
 
 const ChannelList = ({ currentChannelId }) => {
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
+  const scrollableNodeRef = useRef();
   const channels = useSelector(selectChannelList);
+  const ui = useSelector(selectUi);
   const { t } = useTranslation();
 
+  useEffect(() => {
+    const { current: channelListEl } = scrollableNodeRef;
+
+    switch (ui.channelList) {
+      case 'scrollDown':
+        channelListEl.scrollTop = channelListEl.scrollHeight - channelListEl.clientHeight;
+        dispatch(setChannelListScroll('scrollNone'));
+        break;
+
+      case 'scrollNone':
+        break;
+
+      default:
+        throw Error(`Unknown channel list ui state: ${ui.channelList}`);
+    }
+  }, [channels]);
+
   const handleAddChannel = () => {
-    dispath(setModal({ type: 'adding' }));
+    dispatch(setModal({ type: 'adding' }));
   };
 
   return (
@@ -34,8 +53,8 @@ const ChannelList = ({ currentChannelId }) => {
           <IoIosAddCircleOutline size="1.75em" />
         </Button>
       </div>
-      <div className="pt-1 pb-3 overflow-hidden">
-        <SimpleBar className="mh-100">
+      <div className="mt-1 overflow-hidden">
+        <SimpleBar scrollableNodeProps={{ ref: scrollableNodeRef }} className="mh-100">
           <ul className="list-unstyled">
             {channels.map((channel) => {
               const { id } = channel;

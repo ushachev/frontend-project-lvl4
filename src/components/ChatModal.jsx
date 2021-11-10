@@ -9,6 +9,7 @@ import { selectChannelList } from '../store/reducers/channelsSlice.js';
 
 import { setModal } from '../store/reducers/modalSlice.js';
 import { setCurrentChannelId } from '../store/reducers/currentChannelSlice.js';
+import { setChannelListScroll } from '../store/reducers/uiSlice.js';
 
 const modalInfoMapping = {
   adding: {
@@ -52,6 +53,7 @@ const ChatModal = ({
   const submitActionMapping = {
     adding: (name) => sendChannel({ name }).then(({ data }) => {
       handleClose();
+      dispatch(setChannelListScroll('scrollDown'));
       dispatch(setCurrentChannelId(data.id));
     }),
   };

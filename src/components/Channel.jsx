@@ -15,7 +15,7 @@ const Channel = ({ channel, current }) => {
     current && 'bg-dark',
   );
   const buttonClass = cn(
-    'w-100 ps-4 fs-6 text-start',
+    'w-100 ps-4 fs-6 text-start text-truncate',
     !current && 'text-reset',
   );
 
