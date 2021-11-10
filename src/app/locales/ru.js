@@ -25,6 +25,9 @@ export default {
       addChannel: 'Добавить канал',
       cancelButton: 'Отменить',
       sendButton: 'Отправить',
+      info: 'Информация',
+      remove: 'Удалить',
+      rename: 'Переименовать',
     },
     tooltips: {
       logout: 'Выйти',
