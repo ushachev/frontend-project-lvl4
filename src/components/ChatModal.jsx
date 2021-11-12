@@ -27,11 +27,24 @@ const modalInfoMapping = {
     },
   },
   removing: {},
-  renaming: {},
+  renaming: {
+    title: 'elements.renameChannel',
+    body: {
+      type: 'input',
+    },
+    autoFocus: {
+      element: 'input',
+      method: 'select',
+    },
+    submit: {
+      variant: 'outline-info',
+      text: 'elements.sendButton',
+    },
+  },
 };
 
 const ChatModal = ({
-  modal, sendChannel,
+  modal, sendChannel, sendChangedChannel,
 }) => {
   const channels = useSelector(selectChannelList);
   const dispatch = useDispatch();
@@ -56,6 +69,8 @@ const ChatModal = ({
       dispatch(setChannelListScroll('scrollDown'));
       dispatch(setCurrentChannelId(data.id));
     }),
+    renaming: (name) => sendChangedChannel({ id: modal.item.id, name })
+      .then(() => handleClose()),
   };
 
   const channelNames = channels.map(({ name }) => name);
@@ -80,7 +95,7 @@ const ChatModal = ({
   });
 
   return (
-    <Modal size="sm" show onHide={handleClose}>
+    <Modal show onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>{t(modalInfo.title)}</Modal.Title>
       </Modal.Header>
@@ -107,7 +122,7 @@ const ChatModal = ({
           <p>{modalInfo.body.text}</p>
         )}
       </Modal.Body>
-      <Modal.Footer className="justify-content-around">
+      <Modal.Footer>
         <Button variant="outline-light" ref={buttonRef} onClick={handleClose}>
           {t('elements.cancelButton')}
         </Button>

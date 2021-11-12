@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { io } from 'socket.io-client';
 
 import { addMessage } from '../store/reducers/messagesSlice.js';
-import { addChannel } from '../store/reducers/channelsSlice.js';
+import { addChannel, renameChannel } from '../store/reducers/channelsSlice.js';
 
 const useChat = () => {
   const [connected, setConnected] = useState(false);
@@ -28,6 +28,10 @@ const useChat = () => {
       console.log('Chat: new channel added');
       dispatch(addChannel(channel));
     });
+    socketRef.current.on('renameChannel', (channel) => {
+      console.log('Chat: channel renamed');
+      dispatch(renameChannel(channel));
+    });
 
     return () => {
       socketRef.current.disconnect();
@@ -39,7 +43,11 @@ const useChat = () => {
 
     socketRef.current.volatile.emit(event, payload, (response) => {
       clearTimeout(timerId);
-      resolve(response);
+      if (response.status === 'ok') {
+        resolve(response);
+      } else {
+        reject(new Error('Server error'));
+      }
     });
   });
 
@@ -47,7 +55,11 @@ const useChat = () => {
 
   const sendChannel = (channel) => getPromiseByEvent('newChannel', channel);
 
-  return { connected, sendMessage, sendChannel };
+  const sendChangedChannel = (channel) => getPromiseByEvent('renameChannel', channel);
+
+  return {
+    connected, sendMessage, sendChannel, sendChangedChannel,
+  };
 };
 
 export default useChat;

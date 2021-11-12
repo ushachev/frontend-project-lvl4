@@ -23,6 +23,7 @@ export default {
       channels: 'Каналы',
       chatConnects: 'Устанавливается соединение, отправка сообщений пока недоступна',
       addChannel: 'Добавить канал',
+      renameChannel: 'Переименовать канал',
       cancelButton: 'Отменить',
       sendButton: 'Отправить',
       info: 'Информация',

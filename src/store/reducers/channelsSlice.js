@@ -9,6 +9,10 @@ const slice = createSlice({
     addChannel(state, { payload }) {
       state.push(payload);
     },
+    renameChannel(state, { payload }) {
+      const channel = state.find(({ id }) => id === payload.id);
+      channel.name = payload.name;
+    },
   },
   extraReducers: {
     [fetchChatData.fulfilled](_state, { payload }) {
@@ -17,7 +21,7 @@ const slice = createSlice({
   },
 });
 
-export const { addChannel } = slice.actions;
+export const { addChannel, renameChannel } = slice.actions;
 
 export const selectChannelList = (state) => state.channels;
 

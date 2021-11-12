@@ -20,7 +20,9 @@ const Root = () => {
   const currentChannelId = useSelector(selectCurrentChannelId);
   const modal = useSelector(selectModal);
   const dispatch = useDispatch();
-  const { connected, sendMessage, sendChannel } = useChat();
+  const {
+    connected, sendMessage, sendChannel, sendChangedChannel,
+  } = useChat();
 
   useEffect(() => {
     dispatch(fetchChatData());
@@ -53,6 +55,7 @@ const Root = () => {
         <ChatModal
           modal={modal}
           sendChannel={sendChannel}
+          sendChangedChannel={sendChangedChannel}
         />
       )}
     </Container>
