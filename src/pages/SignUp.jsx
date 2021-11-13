@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import {
   Container, Row, Col, Card, Form, FloatingLabel, Button, ToastContainer, Toast,
@@ -11,39 +11,46 @@ import axios from 'axios';
 import useAuth from '../hooks/useAuth.js';
 import routes from '../routes.js';
 
-const Login = () => {
-  const [authFailed, setAuthFailed] = useState(false);
+const SignUp = () => {
+  const [signupFailed, setSignupFailed] = useState(false);
   const usernameRef = useRef();
-  const location = useLocation();
   const history = useHistory();
   const { t } = useTranslation();
   const auth = useAuth();
 
   const formik = useFormik({
-    initialValues: { username: '', password: '' },
+    initialValues: { username: '', password: '', confirmPassword: '' },
     initialErrors: { username: null },
     onSubmit: async ({ username, password }) => {
-      setAuthFailed(false);
+      setSignupFailed(false);
       try {
-        const { data } = await axios.post(routes.loginPath(), { username, password });
-        const { from } = location.state || { from: { pathname: '/' } };
+        const { data } = await axios.post(routes.signupPath(), { username, password });
 
         auth.logIn(data);
-        history.replace(from);
+        history.push('/');
       } catch (err) {
-        if (!err.isAxiosError || err.response.status !== 401) throw err;
+        if (!err.isAxiosError || err.response.status !== 409) throw err;
 
-        setAuthFailed(true);
+        setSignupFailed(true);
         usernameRef.current.select();
       }
     },
     validationSchema: yup.object().shape({
-      username: yup.string().trim().required(),
-      password: yup.string().trim().required(),
+      username: yup.string().trim().required().min(3)
+        .max(20),
+      password: yup.string().trim().required().min(6),
+      confirmPassword: yup.string().trim().test({
+        name: 'passwords-match',
+        test(value) {
+          // eslint-disable-next-line
+          return value === this.parent.password;
+        },
+        message: t('errors.validation.passwordConfirmation'),
+      }),
     }),
   });
 
-  const closeToast = () => setAuthFailed(false);
+  const closeToast = () => setSignupFailed(false);
 
   useEffect(() => {
     usernameRef.current.focus();
@@ -62,10 +69,10 @@ const Login = () => {
             <Card border="secondary">
               <Card.Body>
                 <Form onSubmit={formik.handleSubmit} className="px-5 py-3">
-                  <h2 className="mb-4 fw-light text-center">{t('elements.loginTitle')}</h2>
+                  <h2 className="mb-4 fw-light text-center">{t('elements.registration')}</h2>
                   <FloatingLabel
                     controlId="username"
-                    label={t('placeholders.nickname')}
+                    label={t('placeholders.username')}
                     className="mb-3"
                   >
                     <Form.Control
@@ -80,7 +87,7 @@ const Login = () => {
                       ref={usernameRef}
                     />
                     <Form.Control.Feedback type="invalid" tooltip className="end-0">
-                      {t(formik.errors.username?.key)}
+                      {t(formik.errors.username?.key, formik.errors.username?.values)}
                     </Form.Control.Feedback>
                   </FloatingLabel>
                   <FloatingLabel
@@ -92,14 +99,33 @@ const Login = () => {
                       type="password"
                       placeholder="password"
                       name="password"
-                      autoComplete="current-password"
+                      autoComplete="new-password"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       value={formik.values.password}
                       isInvalid={formik.touched.password && !!formik.errors.password}
                     />
                     <Form.Control.Feedback type="invalid" tooltip className="end-0">
-                      {t(formik.errors.password)}
+                      {t(formik.errors.password?.key, formik.errors.password?.values)}
+                    </Form.Control.Feedback>
+                  </FloatingLabel>
+                  <FloatingLabel
+                    controlId="confirmPassword"
+                    label={t('placeholders.confirmPassword')}
+                    className="mb-4"
+                  >
+                    <Form.Control
+                      type="password"
+                      placeholder="confirmPassword"
+                      name="confirmPassword"
+                      autoComplete="new-password"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.confirmPassword}
+                      isInvalid={formik.touched.confirmPassword && !!formik.errors.confirmPassword}
+                    />
+                    <Form.Control.Feedback type="invalid" tooltip className="end-0">
+                      {formik.errors.confirmPassword}
                     </Form.Control.Feedback>
                   </FloatingLabel>
                   <Button
@@ -109,25 +135,25 @@ const Login = () => {
                     className="w-100"
                     disabled={!formik.isValid || formik.isSubmitting}
                   >
-                    {t('elements.login')}
+                    {t('elements.signup')}
                   </Button>
                 </Form>
               </Card.Body>
               <Card.Footer className="p-4">
                 <div className="text-center">
-                  <span className="pe-2">{t('elements.haveNoAccount')}</span>
-                  <Link to="/signup">{t('elements.registration')}</Link>
+                  <span className="pe-2">{t('elements.haveAccount')}</span>
+                  <Link to="/login">{t('elements.login')}</Link>
                 </div>
               </Card.Footer>
             </Card>
           </Col>
         </Row>
         <ToastContainer className="mt-5 p-3" position="top-center">
-          <Toast show={authFailed} bg="danger" onClose={closeToast}>
+          <Toast show={signupFailed} bg="danger" onClose={closeToast}>
             <Toast.Header>
               <strong className="me-auto">Hexlet Chat</strong>
             </Toast.Header>
-            <Toast.Body>{t('elements.authFailed')}</Toast.Body>
+            <Toast.Body>{t('elements.signupFailed')}</Toast.Body>
           </Toast>
         </ToastContainer>
       </div>
@@ -135,4 +161,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

@@ -10,6 +10,7 @@ import AuthenticatedRoute from '../components/AuthenticatedRoute.jsx';
 
 import Root from '../pages/Root.jsx';
 import Login from '../pages/Login.jsx';
+import SignUp from '../pages/SignUp.jsx';
 import NotFound from '../pages/NotFound.jsx';
 
 const App = () => (
@@ -21,6 +22,9 @@ const App = () => (
         </AuthenticatedRoute>
         <Route path="/login">
           <Login />
+        </Route>
+        <Route path="/signup">
+          <SignUp />
         </Route>
         <Route path="*">
           <NotFound />
