@@ -6,7 +6,6 @@ import useChat from '../hooks/useChat.js';
 
 import fetchChatData from '../store/actions/index.js';
 
-import { selectCurrentChannelId } from '../store/reducers/currentChannelSlice.js';
 import { selectModal } from '../store/reducers/modalSlice.js';
 
 import SidebarHeader from '../components/SidebarHeader.jsx';
@@ -17,11 +16,10 @@ import MessageInput from '../components/MessageInput.jsx';
 import ChatModal from '../components/ChatModal.jsx';
 
 const Root = () => {
-  const currentChannelId = useSelector(selectCurrentChannelId);
   const modal = useSelector(selectModal);
   const dispatch = useDispatch();
   const {
-    connected, sendMessage, sendChannel, sendChangedChannel,
+    connected, sendMessage, sendChannel, sendChangedChannel, sendRemovedChannel,
   } = useChat();
 
   useEffect(() => {
@@ -36,7 +34,7 @@ const Root = () => {
         <Col xs={3} className="d-flex flex-column mh-100 px-0 pb-4 text-muted">
           <SidebarHeader username={username} />
           <h1 className="mt-3 mb-4 ps-3 fs-4 text-body text-opacity-75">Hexlet Chat</h1>
-          <ChannelList currentChannelId={currentChannelId} />
+          <ChannelList />
         </Col>
         <Col xs={9} className="d-flex flex-column mh-100 p-0 text-body text-opacity-75 bg-dark">
           <ChannelHeader />
@@ -46,7 +44,6 @@ const Root = () => {
               sendMessage={sendMessage}
               connected={connected}
               username={username}
-              currentChannelId={currentChannelId}
             />
           </div>
         </Col>
@@ -56,6 +53,7 @@ const Root = () => {
           modal={modal}
           sendChannel={sendChannel}
           sendChangedChannel={sendChangedChannel}
+          sendRemovedChannel={sendRemovedChannel}
         />
       )}
     </Container>

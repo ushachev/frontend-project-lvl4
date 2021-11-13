@@ -4,7 +4,7 @@ import cn from 'classnames';
 import { Button } from 'react-bootstrap';
 import { RiHashtag } from 'react-icons/ri';
 
-import { setCurrentChannelId } from '../store/reducers/currentChannelSlice.js';
+import { setCurrentChannelId } from '../store/reducers/activeChannelSlice.js';
 
 const Channel = ({ channel, current }) => {
   const dispatch = useDispatch();

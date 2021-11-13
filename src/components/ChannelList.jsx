@@ -6,32 +6,32 @@ import { IoIosAddCircleOutline } from 'react-icons/io';
 import { useTranslation } from 'react-i18next';
 
 import { selectChannelList } from '../store/reducers/channelsSlice.js';
-import { selectUi, setChannelListScroll } from '../store/reducers/uiSlice.js';
+import {
+  selectCurrentChannelId, selectDefaultChannelId,
+} from '../store/reducers/activeChannelSlice.js';
 import { setModal } from '../store/reducers/modalSlice.js';
 
 import Channel from './Channel.jsx';
 
-const ChannelList = ({ currentChannelId }) => {
+const ChannelList = () => {
   const dispatch = useDispatch();
   const scrollableNodeRef = useRef();
   const channels = useSelector(selectChannelList);
-  const ui = useSelector(selectUi);
+  const currentChannelId = useSelector(selectCurrentChannelId);
+  const defaultChannelId = useSelector(selectDefaultChannelId);
   const { t } = useTranslation();
 
   useEffect(() => {
     const { current: channelListEl } = scrollableNodeRef;
+    const lastChannel = channels[channels.length - 1];
 
-    switch (ui.channelList) {
-      case 'scrollDown':
-        channelListEl.scrollTop = channelListEl.scrollHeight - channelListEl.clientHeight;
-        dispatch(setChannelListScroll('scrollNone'));
-        break;
+    if (currentChannelId === defaultChannelId) {
+      channelListEl.scrollTop = 0;
+      return;
+    }
 
-      case 'scrollNone':
-        break;
-
-      default:
-        throw Error(`Unknown channel list ui state: ${ui.channelList}`);
+    if (currentChannelId === lastChannel?.id) {
+      channelListEl.scrollTop = channelListEl.scrollHeight;
     }
   }, [channels]);
 

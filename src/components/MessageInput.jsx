@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
 import { IoIosAdd } from 'react-icons/io';
 import { BsWifiOff } from 'react-icons/bs';
@@ -6,10 +7,11 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 
-const MessageInput = ({
-  connected, sendMessage, username, currentChannelId,
-}) => {
+import { selectCurrentChannelId } from '../store/reducers/activeChannelSlice.js';
+
+const MessageInput = ({ connected, sendMessage, username }) => {
   const messageRef = useRef();
+  const currentChannelId = useSelector(selectCurrentChannelId);
   const { t } = useTranslation();
 
   const formik = useFormik({
