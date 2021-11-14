@@ -2,7 +2,7 @@
 
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const Dotenv = require('dotenv-webpack');
+const { EnvironmentPlugin } = require('webpack');
 
 const mode = process.env.NODE_ENV || 'development';
 
@@ -22,7 +22,7 @@ module.exports = {
     historyApiFallback: true,
   },
   plugins: [
-    new Dotenv(),
+    new EnvironmentPlugin(['NODE_ENV', 'POST_CLIENT_ITEM_ACCESS_TOKEN']),
     new MiniCssExtractPlugin(),
   ],
   module: {
