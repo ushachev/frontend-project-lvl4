@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import { useRollbar } from '@rollbar/react';
 import { io } from 'socket.io-client';
 
 import { addMessage } from '../store/reducers/messagesSlice.js';
@@ -9,6 +10,7 @@ const useChat = () => {
   const [connected, setConnected] = useState(false);
   const dispatch = useDispatch();
   const socketRef = useRef();
+  const rollbar = useRollbar();
 
   useEffect(() => {
     socketRef.current = io();
@@ -50,6 +52,7 @@ const useChat = () => {
       if (response.status === 'ok') {
         resolve(response);
       } else {
+        rollbar.error('Server error', { event, payload, response });
         reject(new Error('Server error'));
       }
     });

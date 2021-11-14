@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
-import { useFormik } from 'formik';
 import {
   Container, Row, Col, Card, Form, FloatingLabel, Button, ToastContainer, Toast,
 } from 'react-bootstrap';
-import * as yup from 'yup';
+import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { useRollbar } from '@rollbar/react';
+import * as yup from 'yup';
 import axios from 'axios';
 
 import useAuth from '../hooks/useAuth.js';
@@ -18,6 +19,7 @@ const Login = () => {
   const history = useHistory();
   const { t } = useTranslation();
   const auth = useAuth();
+  const rollbar = useRollbar();
 
   const formik = useFormik({
     initialValues: { username: '', password: '' },
@@ -31,7 +33,10 @@ const Login = () => {
         auth.logIn(data);
         history.replace(from);
       } catch (err) {
-        if (!err.isAxiosError || err.response.status !== 401) throw err;
+        if (!err.isAxiosError || err.response.status !== 401) {
+          rollbar.error('Login error', err, { username });
+          throw err;
+        }
 
         setAuthFailed(true);
         usernameRef.current.select();

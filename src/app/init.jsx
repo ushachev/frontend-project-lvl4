@@ -1,4 +1,5 @@
 import React from 'react';
+import { Provider as RollbarProvider } from '@rollbar/react';
 import { Provider } from 'react-redux';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
@@ -28,10 +29,19 @@ const init = () => {
     },
   });
 
+  const rollbarConfig = {
+    enabled: process.env.NODE_ENV === 'production',
+    accessToken: process.env.POST_CLIENT_ITEM_ACCESS_TOKEN,
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+  };
+
   const vdom = (
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <RollbarProvider config={rollbarConfig}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </RollbarProvider>
   );
 
   return vdom;
