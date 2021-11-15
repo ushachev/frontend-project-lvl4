@@ -1,19 +1,22 @@
-import { useState, useEffect, useRef } from 'react';
+import {
+  useState, useEffect, useRef, useContext,
+} from 'react';
 import { useDispatch } from 'react-redux';
 import { useRollbar } from '@rollbar/react';
-import { io } from 'socket.io-client';
 
+import socketContext from '../contexts/socketContext.js';
 import { addMessage } from '../store/reducers/messagesSlice.js';
 import { addChannel, renameChannel, removeChannel } from '../store/reducers/channelsSlice.js';
 
 const useChat = () => {
   const [connected, setConnected] = useState(false);
+  const { socketClient } = useContext(socketContext);
   const dispatch = useDispatch();
   const socketRef = useRef();
   const rollbar = useRollbar();
 
   useEffect(() => {
-    socketRef.current = io();
+    socketRef.current = socketClient();
     socketRef.current.on('connect', () => {
       console.log('Chat: socket connected with id', socketRef.current.id);
       setConnected(true);

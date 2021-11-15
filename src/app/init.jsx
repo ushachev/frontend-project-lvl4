@@ -1,15 +1,17 @@
 import React from 'react';
 import { Provider as RollbarProvider } from '@rollbar/react';
-import { Provider } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { setLocale } from 'yup';
 
 import resources from './locales/index.js';
 import store from '../store/index.js';
+import socketContext from '../contexts/socketContext.js';
+
 import App from './App.jsx';
 
-const init = () => {
+const init = (socketClient) => {
   i18n
     .use(initReactI18next)
     .init({
@@ -38,9 +40,11 @@ const init = () => {
 
   const vdom = (
     <RollbarProvider config={rollbarConfig}>
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <ReduxProvider store={store}>
+        <socketContext.Provider value={{ socketClient }}>
+          <App />
+        </socketContext.Provider>
+      </ReduxProvider>
     </RollbarProvider>
   );
 
