@@ -41,16 +41,20 @@ const SignUp = () => {
       }
     },
     validationSchema: yup.object().shape({
-      username: yup.string().trim().required().min(3)
-        .max(20),
+      username: yup.string().trim().required().test({
+        name: 'lengthRange',
+        params: { min: 3, max: 20 },
+        test: ({ length } = '') => length > 2 && length < 21,
+        message: ({ min, max }) => ({
+          key: 'errors.validation.lengthRange',
+          values: { min, count: max },
+        }),
+      }),
       password: yup.string().trim().required().min(6),
       confirmPassword: yup.string().trim().test({
-        name: 'passwords-match',
-        test(value) {
-          // eslint-disable-next-line
-          return value === this.parent.password;
-        },
-        message: t('errors.validation.passwordConfirmation'),
+        name: 'passwordsMatch',
+        test: (value, { parent }) => value === parent.password,
+        message: 'errors.validation.passwordConfirmation',
       }),
     }),
   });
@@ -66,7 +70,9 @@ const SignUp = () => {
       <div className="d-flex flex-column justify-content-center h-100">
         <Row className="mb-5">
           <Col>
-            <h1 className="text-center">Hexlet Chat</h1>
+            <h1 className="text-center">
+              <Link to="/">Hexlet Chat</Link>
+            </h1>
           </Col>
         </Row>
         <Row className="justify-content-center mb-5">
@@ -130,7 +136,7 @@ const SignUp = () => {
                       isInvalid={formik.touched.confirmPassword && !!formik.errors.confirmPassword}
                     />
                     <Form.Control.Feedback type="invalid" tooltip className="end-0">
-                      {formik.errors.confirmPassword}
+                      {t(formik.errors.confirmPassword)}
                     </Form.Control.Feedback>
                   </FloatingLabel>
                   <Button

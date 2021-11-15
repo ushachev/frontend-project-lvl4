@@ -67,6 +67,11 @@ const ChatModal = ({
       .then(() => handleClose()),
   };
 
+  const testIdMapping = {
+    adding: 'add-channel',
+    renaming: 'rename-channel',
+  };
+
   const channelNames = channels.map(({ name }) => name);
   const formik = useFormik({
     initialValues: { name: modal.item?.name || '' },
@@ -100,6 +105,7 @@ const ChatModal = ({
           <Form id="channelForm" onSubmit={formik.handleSubmit}>
             <Form.Group className="position-relative">
               <Form.Control
+                data-testid={testIdMapping[modal.type]}
                 name="name"
                 autoComplete="off"
                 readOnly={formik.isSubmitting}

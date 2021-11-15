@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
 
@@ -33,7 +34,9 @@ const Root = () => {
       <Row className="h-100">
         <Col xs={3} className="d-flex flex-column mh-100 px-0 pb-4 text-muted">
           <SidebarHeader username={username} />
-          <h1 className="mt-3 mb-4 ps-3 fs-4 text-body text-opacity-75">Hexlet Chat</h1>
+          <h1 className="mt-3 mb-4 ps-3 fs-4 text-body text-opacity-75">
+            <Link to="/">Hexlet Chat</Link>
+          </h1>
           <ChannelList />
         </Col>
         <Col xs={9} className="d-flex flex-column mh-100 p-0 text-body text-opacity-75 bg-dark">

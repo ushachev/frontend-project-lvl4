@@ -59,7 +59,9 @@ const Login = () => {
       <div className="d-flex flex-column justify-content-center h-100">
         <Row className="mb-5">
           <Col>
-            <h1 className="text-center">Hexlet Chat</h1>
+            <h1 className="text-center">
+              <Link to="/">Hexlet Chat</Link>
+            </h1>
           </Col>
         </Row>
         <Row className="justify-content-center mb-5">
@@ -104,7 +106,7 @@ const Login = () => {
                       isInvalid={formik.touched.password && !!formik.errors.password}
                     />
                     <Form.Control.Feedback type="invalid" tooltip className="end-0">
-                      {t(formik.errors.password)}
+                      {t(formik.errors.password?.key)}
                     </Form.Control.Feedback>
                   </FloatingLabel>
                   <Button

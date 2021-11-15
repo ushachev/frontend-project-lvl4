@@ -41,6 +41,7 @@ const MessageInput = ({ connected, sendMessage, username }) => {
     <Form onSubmit={formik.handleSubmit} className="ps-3">
       <div className="position-relative">
         <Form.Control
+          data-testid="new-message"
           type="text"
           placeholder={t('placeholders.enterMessage')}
           name="body"
