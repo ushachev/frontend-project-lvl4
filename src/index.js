@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
-import { io } from 'socket.io-client';
 
 import '../assets/styles/application.scss';
 
@@ -14,7 +13,7 @@ if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-const app = init(io);
+const app = init();
 const container = document.getElementById('chat');
 
 ReactDOM.render(app, container);

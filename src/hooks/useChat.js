@@ -10,13 +10,13 @@ import { addChannel, renameChannel, removeChannel } from '../store/reducers/chan
 
 const useChat = () => {
   const [connected, setConnected] = useState(false);
-  const { socketClient } = useContext(socketContext);
+  const { socket } = useContext(socketContext);
   const dispatch = useDispatch();
   const socketRef = useRef();
   const rollbar = useRollbar();
 
   useEffect(() => {
-    socketRef.current = socketClient();
+    socketRef.current = socket;
     socketRef.current.on('connect', () => {
       console.log('Chat: socket connected with id', socketRef.current.id);
       setConnected(true);

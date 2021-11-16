@@ -4,6 +4,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { setLocale } from 'yup';
+import { io } from 'socket.io-client';
 
 import resources from './locales/index.js';
 import store from '../store/index.js';
@@ -11,7 +12,9 @@ import socketContext from '../contexts/socketContext.js';
 
 import App from './App.jsx';
 
-const init = (socketClient) => {
+const defaultSocketClient = io();
+
+const init = (socket = defaultSocketClient) => {
   i18n
     .use(initReactI18next)
     .init({
@@ -41,7 +44,7 @@ const init = (socketClient) => {
   const vdom = (
     <RollbarProvider config={rollbarConfig}>
       <ReduxProvider store={store}>
-        <socketContext.Provider value={{ socketClient }}>
+        <socketContext.Provider value={{ socket }}>
           <App />
         </socketContext.Provider>
       </ReduxProvider>
