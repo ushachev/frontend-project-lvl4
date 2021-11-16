@@ -9,7 +9,7 @@ import { selectCurrentChannel } from '../store/reducers/channelsSlice.js';
 
 import CustomToggle from './CustomToggle.jsx';
 
-const ChannelHeader = () => {
+const ChannelHeader = function ChannelHeader() {
   const dispatch = useDispatch();
   const { id, name, removable } = useSelector(selectCurrentChannel);
   const { t } = useTranslation();

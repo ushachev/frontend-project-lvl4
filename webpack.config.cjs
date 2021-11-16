@@ -22,7 +22,7 @@ module.exports = {
     historyApiFallback: true,
   },
   plugins: [
-    new EnvironmentPlugin(['NODE_ENV', 'POST_CLIENT_ITEM_ACCESS_TOKEN']),
+    new EnvironmentPlugin(['POST_CLIENT_ITEM_ACCESS_TOKEN']),
     new MiniCssExtractPlugin(),
   ],
   module: {

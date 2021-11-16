@@ -12,7 +12,7 @@ import axios from 'axios';
 import useAuth from '../hooks/useAuth.js';
 import routes from '../routes.js';
 
-const SignUp = () => {
+const SignUp = function SignUp() {
   const [signupFailed, setSignupFailed] = useState(false);
   const usernameRef = useRef();
   const history = useHistory();

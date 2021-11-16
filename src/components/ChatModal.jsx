@@ -25,9 +25,9 @@ const modalInfoMapping = {
   },
 };
 
-const ChatModal = ({
+const ChatModal = function ChatModal({
   modal, sendChannel, sendChangedChannel, sendRemovedChannel,
-}) => {
+}) {
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const channels = useSelector(selectChannelList);
   const dispatch = useDispatch();

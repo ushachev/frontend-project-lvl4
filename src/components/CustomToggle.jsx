@@ -20,4 +20,6 @@ const CustomToggle = React.forwardRef(({ onClick }, ref) => {
   );
 });
 
+CustomToggle.displayName = 'CustomToggle';
+
 export default CustomToggle;

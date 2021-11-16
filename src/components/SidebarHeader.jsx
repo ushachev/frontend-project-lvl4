@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import useAuth from '../hooks/useAuth.js';
 
-const SidebarHeader = ({ username }) => {
+const SidebarHeader = function SidebarHeader({ username }) {
   const auth = useAuth();
   const { t } = useTranslation();
 

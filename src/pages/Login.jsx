@@ -12,7 +12,7 @@ import axios from 'axios';
 import useAuth from '../hooks/useAuth.js';
 import routes from '../routes.js';
 
-const Login = () => {
+const Login = function Login() {
   const [authFailed, setAuthFailed] = useState(false);
   const usernameRef = useRef();
   const location = useLocation();

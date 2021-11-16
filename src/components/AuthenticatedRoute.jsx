@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 import useAuth from '../hooks/useAuth.js';
 
-const AuthenticatedRoute = ({ children, exact = false }) => {
+const AuthenticatedRoute = function AuthenticatedRoute({ children, exact = false }) {
   const auth = useAuth();
 
   return (

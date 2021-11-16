@@ -13,25 +13,27 @@ import Login from '../pages/Login.jsx';
 import SignUp from '../pages/SignUp.jsx';
 import NotFound from '../pages/NotFound.jsx';
 
-const App = () => (
-  <AuthProvider>
-    <Router>
-      <Switch>
-        <AuthenticatedRoute exact path="/">
-          <Root />
-        </AuthenticatedRoute>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/signup">
-          <SignUp />
-        </Route>
-        <Route path="*">
-          <NotFound />
-        </Route>
-      </Switch>
-    </Router>
-  </AuthProvider>
-);
+const App = function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <Switch>
+          <AuthenticatedRoute exact path="/">
+            <Root />
+          </AuthenticatedRoute>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/signup">
+            <SignUp />
+          </Route>
+          <Route path="*">
+            <NotFound />
+          </Route>
+        </Switch>
+      </Router>
+    </AuthProvider>
+  );
+};
 
 export default App;

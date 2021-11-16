@@ -6,7 +6,7 @@ import { RiHashtag } from 'react-icons/ri';
 
 import { setCurrentChannelId } from '../store/reducers/activeChannelSlice.js';
 
-const Channel = ({ channel, current }) => {
+const Channel = function Channel({ channel, current }) {
   const dispatch = useDispatch();
 
   const { id, name } = channel;

@@ -13,7 +13,7 @@ import { setModal } from '../store/reducers/modalSlice.js';
 
 import Channel from './Channel.jsx';
 
-const ChannelList = () => {
+const ChannelList = function ChannelList() {
   const dispatch = useDispatch();
   const scrollableNodeRef = useRef();
   const channels = useSelector(selectChannelList);

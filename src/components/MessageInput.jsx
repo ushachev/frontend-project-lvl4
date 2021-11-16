@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 import { selectCurrentChannelId } from '../store/reducers/activeChannelSlice.js';
 
-const MessageInput = ({ connected, sendMessage, username }) => {
+const MessageInput = function MessageInput({ connected, sendMessage, username }) {
   const messageRef = useRef();
   const currentChannelId = useSelector(selectCurrentChannelId);
   const { t } = useTranslation();

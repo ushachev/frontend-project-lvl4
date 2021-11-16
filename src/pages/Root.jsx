@@ -16,7 +16,7 @@ import MessageBox from '../components/MessageBox.jsx';
 import MessageInput from '../components/MessageInput.jsx';
 import ChatModal from '../components/ChatModal.jsx';
 
-const Root = () => {
+const Root = function Root() {
   const modal = useSelector(selectModal);
   const dispatch = useDispatch();
   const {

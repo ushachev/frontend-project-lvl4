@@ -4,7 +4,7 @@ import SimpleBar from 'simplebar-react';
 
 import { selectCurrentMessageList } from '../store/reducers/messagesSlice.js';
 
-const MessageBox = () => {
+const MessageBox = function MessageBox() {
   const scrollableNodeRef = useRef();
   const messageList = useSelector(selectCurrentMessageList);
 

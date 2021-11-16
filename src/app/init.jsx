@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
+
 import React from 'react';
 import { Provider as RollbarProvider } from '@rollbar/react';
 import { Provider as ReduxProvider } from 'react-redux';
