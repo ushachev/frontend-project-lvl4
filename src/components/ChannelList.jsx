@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 // import SimpleBar from 'simplebar-react';
-import { IoIosAddCircleOutline } from 'react-icons/io';
+// import { IoIosAddCircleOutline } from 'react-icons/io';
 import { useTranslation } from 'react-i18next';
 
 import { selectChannelList } from '../store/reducers/channelsSlice.js';
@@ -50,8 +50,7 @@ const ChannelList = function ChannelList() {
           title={t('tooltips.addChannel')}
           onClick={handleAddChannel}
         >
-          <IoIosAddCircleOutline size="1.75em" />
-          <span className="visually-hidden">+</span>
+          +
         </Button>
       </div>
       <div className="mt-1 overflow-hidden">
