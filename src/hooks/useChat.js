@@ -21,10 +21,10 @@ const useChat = () => {
 
     socketRef.current.on('connect', connectListener);
     socketRef.current.on('disconnect', disconnectListener);
-    socketRef.current.connect();
+    socketRef.current?.connect();
 
     return () => {
-      socketRef.current.disconnect();
+      socketRef.current?.disconnect();
       socketRef.current.off('connect', connectListener);
       socketRef.current.off('disconnect', disconnectListener);
     };
