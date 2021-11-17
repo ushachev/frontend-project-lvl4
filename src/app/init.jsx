@@ -10,11 +10,13 @@ import { io } from 'socket.io-client';
 
 import resources from './locales/index.js';
 import store from '../store/index.js';
+import { addMessage } from '../store/reducers/messagesSlice.js';
+import { addChannel, renameChannel, removeChannel } from '../store/reducers/channelsSlice.js';
 import socketContext from '../contexts/socketContext.js';
 
 import App from './App.jsx';
 
-const defaultSocketClient = io();
+const defaultSocketClient = io({ autoConnect: false });
 
 const init = (socket = defaultSocketClient) => {
   i18n
@@ -42,6 +44,30 @@ const init = (socket = defaultSocketClient) => {
     captureUncaught: true,
     captureUnhandledRejections: true,
   };
+
+  const { dispatch } = store;
+  socket.on('connect', () => {
+    console.log('Chat: socket connected with id', socket.id);
+  });
+  socket.on('disconnect', () => {
+    console.log('Chat: socket disconnected');
+  });
+  socket.on('newMessage', (message) => {
+    console.log('Chat: new message added');
+    dispatch(addMessage(message));
+  });
+  socket.on('newChannel', (channel) => {
+    console.log('Chat: new channel added');
+    dispatch(addChannel(channel));
+  });
+  socket.on('renameChannel', (channel) => {
+    console.log('Chat: channel renamed');
+    dispatch(renameChannel(channel));
+  });
+  socket.on('removeChannel', (channel) => {
+    console.log('Chat: channel removed');
+    dispatch(removeChannel(channel));
+  });
 
   const vdom = (
     <RollbarProvider config={rollbarConfig}>
