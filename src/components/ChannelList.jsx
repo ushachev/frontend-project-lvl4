@@ -47,10 +47,10 @@ const ChannelList = function ChannelList() {
           variant="contained"
           size="sm"
           className="text-reset"
-          title={t('tooltips.addChannel')}
+          title="+"
           onClick={handleAddChannel}
         >
-          +
+          <span>+</span>
         </Button>
       </div>
       <div className="mt-1 overflow-hidden">
