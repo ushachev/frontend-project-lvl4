@@ -39,13 +39,7 @@ const ChatModal = function ChatModal({
   const autoFocusRef = modal.type === 'removing' ? buttonRef : inputRef;
 
   useEffect(() => {
-    const chatEl = document.getElementById('chat');
-    chatEl.setAttribute('aria-hidden', true);
     autoFocusRef.current[modalInfo.autoFocusMethod]();
-
-    return () => {
-      chatEl.removeAttribute('aria-hidden');
-    };
   }, []);
 
   const handleClose = () => {
