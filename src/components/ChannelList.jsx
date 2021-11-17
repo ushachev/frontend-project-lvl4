@@ -51,6 +51,7 @@ const ChannelList = function ChannelList() {
           onClick={handleAddChannel}
         >
           <IoIosAddCircleOutline size="1.75em" />
+          <span className="visually-hidden">+</span>
         </Button>
       </div>
       <div className="mt-1 overflow-hidden">

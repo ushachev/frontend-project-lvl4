@@ -61,6 +61,7 @@ const MessageInput = function MessageInput({ connected, sendMessage, username })
           disabled={!connected || !formik.isValid || formik.isSubmitting}
         >
           <IoIosAdd size="2em" />
+          <span className="visually-hidden">{t('elements.send')}</span>
         </Button>
       </div>
       <Form.Text id="messageHelpBlock" muted className="ps-4">
