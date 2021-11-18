@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
-// import SimpleBar from 'simplebar-react';
-// import { IoIosAddCircleOutline } from 'react-icons/io';
+import SimpleBar from 'simplebar-react';
+import { IoIosAddCircleOutline } from 'react-icons/io';
 import { useTranslation } from 'react-i18next';
 
 import { selectChannelList } from '../store/reducers/channelsSlice.js';
 import {
-  selectCurrentChannelId,
+  selectCurrentChannelId, selectDefaultChannelId,
 } from '../store/reducers/activeChannelSlice.js';
 import { setModal } from '../store/reducers/modalSlice.js';
 
@@ -15,25 +15,25 @@ import Channel from './Channel.jsx';
 
 const ChannelList = function ChannelList() {
   const dispatch = useDispatch();
-  // const scrollableNodeRef = useRef();
+  const scrollableNodeRef = useRef();
   const channels = useSelector(selectChannelList);
   const currentChannelId = useSelector(selectCurrentChannelId);
-  // const defaultChannelId = useSelector(selectDefaultChannelId);
+  const defaultChannelId = useSelector(selectDefaultChannelId);
   const { t } = useTranslation();
 
-  // useEffect(() => {
-  //   const { current: channelListEl } = scrollableNodeRef;
-  //   const lastChannel = channels[channels.length - 1];
+  useEffect(() => {
+    const { current: channelListEl } = scrollableNodeRef;
+    const lastChannel = channels[channels.length - 1];
 
-  //   if (currentChannelId === defaultChannelId) {
-  //     channelListEl.scrollTop = 0;
-  //     return;
-  //   }
+    if (currentChannelId === defaultChannelId) {
+      channelListEl.scrollTop = 0;
+      return;
+    }
 
-  //   if (currentChannelId === lastChannel?.id) {
-  //     channelListEl.scrollTop = channelListEl.scrollHeight;
-  //   }
-  // }, [channels]);
+    if (currentChannelId === lastChannel?.id) {
+      channelListEl.scrollTop = channelListEl.scrollHeight;
+    }
+  }, [channels]);
 
   const handleAddChannel = () => {
     dispatch(setModal({ type: 'adding' }));
@@ -47,21 +47,23 @@ const ChannelList = function ChannelList() {
           variant="contained"
           size="sm"
           className="text-reset"
-          title="+"
+          title={t('tooltips.addChannel')}
           onClick={handleAddChannel}
         >
-          <span>+</span>
+          <IoIosAddCircleOutline size="1.75em" />
         </Button>
       </div>
       <div className="mt-1 overflow-hidden">
-        <ul className="list-unstyled">
-          {channels.map((channel) => {
-            const { id } = channel;
-            return (
-              <Channel key={id} channel={channel} current={id === currentChannelId} />
-            );
-          })}
-        </ul>
+        <SimpleBar scrollableNodeProps={{ ref: scrollableNodeRef }} className="mh-100">
+          <ul className="list-unstyled">
+            {channels.map((channel) => {
+              const { id } = channel;
+              return (
+                <Channel key={id} channel={channel} current={id === currentChannelId} />
+              );
+            })}
+          </ul>
+        </SimpleBar>
       </div>
     </>
   );

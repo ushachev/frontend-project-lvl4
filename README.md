@@ -1,6 +1,5 @@
 # Chat app (Slack)
 
-[![Actions Status](https://github.com/ushachev/frontend-project-lvl4/workflows/hexlet-check/badge.svg)](https://github.com/ushachev/frontend-project-lvl4/actions)
 [![Node CI](https://github.com/ushachev/frontend-project-lvl4/actions/workflows/nodejs.yml/badge.svg)](https://github.com/ushachev/frontend-project-lvl4/actions/workflows/nodejs.yml)
 
 ## Install

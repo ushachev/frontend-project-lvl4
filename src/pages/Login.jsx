@@ -59,9 +59,7 @@ const Login = function Login() {
       <div className="d-flex flex-column justify-content-center h-100">
         <Row className="mb-5">
           <Col>
-            <h1 className="text-center">
-              <Link to="/">Hexlet Chat</Link>
-            </h1>
+            <h1 className="text-center">Hexlet Chat</h1>
           </Col>
         </Row>
         <Row className="justify-content-center mb-5">
