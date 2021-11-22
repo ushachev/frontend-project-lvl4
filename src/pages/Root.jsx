@@ -18,12 +18,15 @@ import ChatModal from '../components/ChatModal.jsx';
 const Root = function Root() {
   const modal = useSelector(selectModal);
   const dispatch = useDispatch();
-  const {
-    connected, sendMessage, sendChannel, sendChangedChannel, sendRemovedChannel,
-  } = useChat();
+  const { connectSocket, disconnectSocket } = useChat();
 
   useEffect(() => {
     dispatch(fetchChatData());
+    connectSocket();
+
+    return () => {
+      disconnectSocket();
+    };
   }, []);
 
   const { username } = JSON.parse(localStorage.getItem('user'));
@@ -41,8 +44,6 @@ const Root = function Root() {
           <MessageBox />
           <div className="px-5 py-1">
             <MessageInput
-              sendMessage={sendMessage}
-              connected={connected}
               username={username}
             />
           </div>
@@ -51,9 +52,6 @@ const Root = function Root() {
       {modal.type && (
         <ChatModal
           modal={modal}
-          sendChannel={sendChannel}
-          sendChangedChannel={sendChangedChannel}
-          sendRemovedChannel={sendRemovedChannel}
         />
       )}
     </Container>

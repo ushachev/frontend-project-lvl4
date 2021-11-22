@@ -12,6 +12,7 @@ import resources from './locales/index.js';
 import store from '../store/index.js';
 import { addMessage } from '../store/reducers/messagesSlice.js';
 import { addChannel, renameChannel, removeChannel } from '../store/reducers/channelsSlice.js';
+import { setSocketStatus } from '../store/reducers/socketStatusSlice.js';
 import socketContext from '../contexts/socketContext.js';
 
 import App from './App.jsx';
@@ -48,9 +49,11 @@ const init = (socket = defaultSocketClient) => {
   const { dispatch } = store;
   socket.on('connect', () => {
     console.log('Chat: socket connected with id', socket.id);
+    dispatch(setSocketStatus({ connected: true }));
   });
   socket.on('disconnect', () => {
     console.log('Chat: socket disconnected');
+    dispatch(setSocketStatus({ connected: false }));
   });
   socket.on('newMessage', (message) => {
     console.log('Chat: new message added');

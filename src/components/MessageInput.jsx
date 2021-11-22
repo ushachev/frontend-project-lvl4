@@ -7,11 +7,16 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 
-import { selectCurrentChannelId } from '../store/reducers/activeChannelSlice.js';
+import useChat from '../hooks/useChat.js';
 
-const MessageInput = function MessageInput({ connected, sendMessage, username }) {
+import { selectCurrentChannelId } from '../store/reducers/activeChannelSlice.js';
+import { selectSocketConnectedStatus } from '../store/reducers/socketStatusSlice.js';
+
+const MessageInput = function MessageInput({ username }) {
   const messageRef = useRef();
   const currentChannelId = useSelector(selectCurrentChannelId);
+  const connected = useSelector(selectSocketConnectedStatus);
+  const { sendMessage } = useChat();
   const { t } = useTranslation();
 
   const formik = useFormik({

@@ -5,6 +5,8 @@ import * as yup from 'yup';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
+import useChat from '../hooks/useChat.js';
+
 import { selectChannelList } from '../store/reducers/channelsSlice.js';
 
 import { setModal } from '../store/reducers/modalSlice.js';
@@ -25,14 +27,13 @@ const modalInfoMapping = {
   },
 };
 
-const ChatModal = function ChatModal({
-  modal, sendChannel, sendChangedChannel, sendRemovedChannel,
-}) {
+const ChatModal = function ChatModal({ modal }) {
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const channels = useSelector(selectChannelList);
   const dispatch = useDispatch();
   const inputRef = useRef();
   const buttonRef = useRef();
+  const { sendChannel, sendChangedChannel, sendRemovedChannel } = useChat();
   const { t } = useTranslation();
 
   const modalInfo = modalInfoMapping[modal.type];
